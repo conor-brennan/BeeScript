@@ -1,7 +1,8 @@
 import keyboard
 
 words = []
-WORD_DELAY = 0.5
+WORD_DELAY = 0.55
+SUPPORTED = ".txt"
 START = 'ctrl'
 STOP = 'shift'
 
@@ -26,15 +27,19 @@ def locate_text_file():
     while in_path == "":
         try:
             in_path = input(welcome_text)
-            in_file = open(in_path, "r")
-            parse_text_file(in_file)
-            in_file.close()
+            if in_path[-4:-1] == SUPPORTED:         # will require a change if supported files change
+                in_file = open(in_path, "r")
+                parse_text_file(in_file)
+                in_file.close()
+                instructions = input(instructions_query).lower()
+                print(starting_text)
 
-            instructions = input(instructions_query).lower()
-            print(starting_text)
+                if instructions == "y":
+                    display_instructions()
 
-            if instructions == "y":
-                display_instructions()
+            else:
+                in_path = ""
+                print("\nProgram currently only supports ---.txt files\n")
         except FileNotFoundError:
             print("\n" + error_text + "\n")
             in_path = ""
