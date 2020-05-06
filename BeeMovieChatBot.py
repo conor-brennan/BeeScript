@@ -16,7 +16,7 @@ instructions_text2 = "To start the chat bot, you will only have to press " + STA
 instructions_text3 = "If you have started the chat bot and wish to terminate it early, hold " + STOP + \
                      " until the program terminates\n"
 instructions_text4 = "Each word will take approx. " + str(WORD_DELAY * 2) + "s to be output. This can be changed " \
-                     "by changing the WORD_DELAY variable\n"
+                                                                            "by changing the WORD_DELAY variable\n"
 instructions_text5 = "Would you like to read the instructions again? Y/N "
 
 starting_text = "\nThe chat bot is live. Press " + START + " when you are ready to begin\n"
@@ -27,7 +27,7 @@ def locate_text_file():
     while in_path == "":
         try:
             in_path = input(welcome_text)
-            if in_path[-4:-1] == SUPPORTED:         # will require a change if supported files change
+            if in_path[-4:] == SUPPORTED:  # will require a change if supported files change
                 in_file = open(in_path, "r")
                 parse_text_file(in_file)
                 in_file.close()
@@ -86,6 +86,7 @@ def display_instructions():
     if repeat == "y":
         display_instructions()
 
+
 def chat_bot():
     keyboard.wait(START)
     keyboard.release(START)
@@ -94,14 +95,10 @@ def chat_bot():
             break
         keyboard.write(word)
         keyboard.send("enter")
-        keyboard.write("  ", delay=WORD_DELAY)
+        keyboard.write("  ", delay=WORD_DELAY)      # this is to add some time between words
         keyboard.send('backspace')
         keyboard.send('backspace')
 
-
-# parse_words("I am now trying to optimize timing to not glitch while also spamming")
-# parse_words("This is support for a second sentence")
-# parse_words("and maybe even a third!")
 
 locate_text_file()
 chat_bot()
