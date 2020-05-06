@@ -7,7 +7,8 @@ START = 'ctrl'
 STOP = 'shift'
 
 welcome_text = "Path to file: "
-error_text = "File not found. Make sure to input the correct path to file"
+file_not_found_text = "\nFile not found. Make sure to input the correct path to file\n"
+unicode_decode_text = "\nFile contains unsupported character. Make sure file only contains unicode characters.\n"
 instructions_query = "Would you like to read the instructions before continuing? Y/N "
 continue_text = "Press enter to continue\n"
 
@@ -41,7 +42,10 @@ def locate_text_file():
                 in_path = ""
                 print("\nProgram currently only supports ---.txt files\n")
         except FileNotFoundError:
-            print("\n" + error_text + "\n")
+            print(file_not_found_text)
+            in_path = ""
+        except UnicodeDecodeError:
+            print(unicode_decode_text)
             in_path = ""
 
 
@@ -95,7 +99,7 @@ def chat_bot():
             break
         keyboard.write(word)
         keyboard.send("enter")
-        keyboard.write("  ", delay=WORD_DELAY)      # this is to add some time between words
+        keyboard.write("  ", delay=WORD_DELAY)  # this is to add some time between words
         keyboard.send('backspace')
         keyboard.send('backspace')
 
